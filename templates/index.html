@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical History Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Medical History Summarizer for Doctors</h1>
+        <textarea id="text" placeholder="Enter medical history here..."></textarea>
+        <button onclick="summarize()">Summarize</button>
+        <h2>Summary:</h2>
+        <p id="summary"></p>
+    </div>
+
+    <script>
+        function summarize() {
+            fetch('/summarize', {
+                method: 'POST',
+                body: new URLSearchParams('text=' + document.getElementById('text').value)
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById('summary').innerText = data.summary);
+        }
+    </script>
+</body>
+</html>
